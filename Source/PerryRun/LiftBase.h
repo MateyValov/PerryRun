@@ -19,18 +19,23 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere)
 	float LiftHeight = 0.0f;
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void UpdateLift();
 
 
 private: 
+	UPROPERTY(EditAnywhere)
+	float stepCount = 100;
+	UPROPERTY()
+	float move;
+	UPROPERTY()
+	float destination;
 	UPROPERTY()
 	float StartingPoint = 0.0f;
 	UPROPERTY()
 	float EndPoint = 0.0f;
+	UPROPERTY()
+	bool canMove=true;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Meta = ( AllowPrivateAccess = "true"))
 	class USceneComponent* RootScene = nullptr;
 
@@ -56,4 +61,8 @@ public:
 private:
 	UFUNCTION()
 	void ButtonTriggered(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+private:
+	UFUNCTION()
+	void UpdateLift();
 };

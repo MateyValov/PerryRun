@@ -4,18 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Hostile.h"
 #include "Obstacle.generated.h"
 
+
 UCLASS()
-class PERRYRUN_API AObstacle : public AActor
+class PERRYRUN_API AObstacle : public AHostile
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
 	AObstacle();
-	UPROPERTY(EditAnywhere)
-	class USceneComponent* root = nullptr;
 	//UPROPERTY(EditAnywhere)
 	//class USceneComponent* mesh = nullptr;
 	//UPROPERTY(EditAnywhere)
@@ -28,8 +28,6 @@ public:
 	class UStaticMeshComponent* eye2 = nullptr;
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* mouth = nullptr;
-	UPROPERTY(EditAnywhere)
-	class UBoxComponent* hitbox = nullptr;
 
 protected:
 	UPROPERTY()
@@ -38,14 +36,11 @@ protected:
 		float speed = 20.0f;
 	UPROPERTY(EditAnywhere)
 		bool random = false;
+	UPROPERTY(VisibleAnywhere)
+	class UWidgetComponent* HPWidget = nullptr;
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 private:
-	UFUNCTION()
-	void objCollide(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
