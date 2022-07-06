@@ -15,9 +15,9 @@ class PERRYRUN_API UHPBar : public UUserWidget
 	GENERATED_BODY()
 	private:
 	protected:
-		UPROPERTY(EditAnywhere)
-			class AObstacle* perry;
-		UPROPERTY(meta = (BindWidget))
+		//UPROPERTY(EditAnywhere)
+		//	class AObstacle* perry;
+		UPROPERTY(VisibleAnywhere,BlueprintReadOnly,meta = (BindWidget))
 			class UProgressBar* HPBar;
 	public:
 

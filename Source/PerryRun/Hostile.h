@@ -21,7 +21,10 @@ protected:
 	class UBoxComponent* hitbox = nullptr;
 	UPROPERTY(EditAnywhere)
 		class USceneComponent* root = nullptr;
-
+	UPROPERTY(EditAnywhere)
+		float damage = 0.0f;
+	UPROPERTY(EditAnywhere)
+		float recoveryTime = 0.0f;
 public:
 
 private:

@@ -24,7 +24,7 @@ void AHostile ::objCollide(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	APerryRunCharacter* actor = Cast<APerryRunCharacter>(OtherActor);
 
 	if (actor != nullptr) {
-		actor->Respawn();
+		actor->takeDamage(damage, recoveryTime);
 	}
 }
 

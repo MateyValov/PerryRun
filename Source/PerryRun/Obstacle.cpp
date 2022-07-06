@@ -17,18 +17,9 @@ AObstacle::AObstacle()
 	SetRootComponent(root);*/
 
 	//mesh = CreateDefaultSubobject<USceneComponent>(TEXT("obj"));
-	head = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Head"));
-	head->SetupAttachment(root);
+	
 
-	eye1 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Eye1"));
-	eye1->SetupAttachment(head);
-	eye2 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Eye2"));
-	eye2->SetupAttachment(head);
-	mouth = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mouth"));
-	mouth->SetupAttachment(head);
-
-	HPWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HP"));
-	HPWidget->SetupAttachment(head);
+	
 
 	
 
@@ -40,7 +31,6 @@ void AObstacle::BeginPlay()
 	Super::BeginPlay();
 	
 }
-
 
 
 

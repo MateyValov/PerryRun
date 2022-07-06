@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Engine.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "PerryRunCharacter.generated.h"
@@ -22,17 +23,28 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
 
+	FTimerHandle iframeHandle;
+	FTimerHandle messageHandle;
+
 protected:
 	UPROPERTY()
 		bool isCrouching = false;
+	UPROPERTY()
+		bool invincible = false;
+
+
 public:
 	APerryRunCharacter();
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stats)
+	UPROPERTY(VisibleAnywhere, Category = Stats)
 		float currHP;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stats)
+	UPROPERTY(EditAnywhere, Category = Stats)
 		float maxHP;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stats)
+		float percentHP;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stats)
+		FString displayMessage = "";
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseTurnRate;
@@ -92,12 +104,49 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 	UFUNCTION()
-		void setSpawnpoint() { Spawnpoint = GetActorLocation(); }
+	void Clear() {
+		displayMessage = "";
+	}
 
 	UFUNCTION()
+		void changeMessage(FString message) {
+			displayMessage = message;
+			GetWorldTimerManager().SetTimer(messageHandle, this, &APerryRunCharacter::Clear, 1, false);
+		}
+
+	UFUNCTION()
+		void setSpawnpoint(FVector newLocation) { 
+				if (Spawnpoint != newLocation) {
+					//displayMessage = "Checkpoint Reached";
+					Spawnpoint = newLocation;
+				}			
+		}
+
+	UFUNCTION(BlueprintCallable)
 		void Respawn() {
+			currHP = maxHP;
 			SetActorLocation(Spawnpoint);
 			SetActorRotation(FQuat(FRotator(0, 0, 0)), ETeleportType::None);
 	}
+
+	UFUNCTION()
+		void print() {
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, "no longer invincible");
+		invincible = false;
+	}
+
+	UFUNCTION()
+	void takeDamage(float damage, float recoveryTime) {
+		if (!invincible) {
+			currHP -= damage;
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, "vzemi toz demij");
+			if (currHP <= 0) die();
+			invincible = true;
+			GetWorldTimerManager().SetTimer(iframeHandle, this, &APerryRunCharacter::print, recoveryTime, false);
+		}
+	}
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void die();
 };
 

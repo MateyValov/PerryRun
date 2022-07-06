@@ -22,12 +22,12 @@ public:
 	float static static_test;
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* head = nullptr;
-	UPROPERTY(EditAnywhere)
+	/*UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* eye1 = nullptr;
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* eye2 = nullptr;
 	UPROPERTY(EditAnywhere)
-	class UStaticMeshComponent* mouth = nullptr;
+	class UStaticMeshComponent* mouth = nullptr;*/
 
 protected:
 	UPROPERTY()
