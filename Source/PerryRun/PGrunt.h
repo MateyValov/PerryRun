@@ -29,9 +29,7 @@ class PERRYRUN_API APGrunt : public AHostile
 		UPROPERTY()
 			float Runtime = 0.0f;
 		UPROPERTY()
-			float StartingPoint = 0.0f;
-		UPROPERTY()
-			float EndPoint = 0.0f;
+			FVector StartingPoint ;
 		UPROPERTY(EditAnywhere)
 			float offset = 20.0f;
 		UPROPERTY(EditAnywhere)
@@ -40,6 +38,10 @@ class PERRYRUN_API APGrunt : public AHostile
 			float speed = 0.0f;
 		UPROPERTY(EditAnywhere)
 			bool random = false;
+		UPROPERTY(EditAnywhere)
+			bool moveOnX = false;
+		UPROPERTY(EditAnywhere)
+			bool moveOnZ = false;
 		// Called when the game starts or when spawned
 		virtual void BeginPlay() override;
 		

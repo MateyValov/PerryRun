@@ -157,3 +157,30 @@ void APerryRunCharacter::MoveRight(float Value)
 		AddMovementInput(Direction, Value);
 	}
 }
+
+void APerryRunCharacter::changeMessage(FString message) {
+	displayMessage = message;
+	GetWorldTimerManager().SetTimer(messageHandle, this, &APerryRunCharacter::Clear, 1, false);
+}
+
+void APerryRunCharacter::setSpawnpoint(FVector newLocation) {
+	if (Spawnpoint != newLocation) {
+		//displayMessage = "Checkpoint Reached";
+		Spawnpoint = newLocation;
+	}
+}
+
+void APerryRunCharacter::Respawn() {
+	currHP = maxHP;
+	SetActorLocation(Spawnpoint);
+	SetActorRotation(FQuat(FRotator(0, 0, 0)), ETeleportType::None);
+}
+
+void APerryRunCharacter::takeDamage(float damage, float recoveryTime) {
+	if (!invincible) {
+		currHP -= damage;
+		if (currHP <= 0) die();
+		invincible = true;
+		GetWorldTimerManager().SetTimer(iframeHandle, this, &APerryRunCharacter::iframeCancel, recoveryTime, false);
+	}
+}

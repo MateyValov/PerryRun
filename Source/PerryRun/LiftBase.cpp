@@ -34,20 +34,21 @@ void ALiftBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	StartingPoint = GetActorLocation().Z;
-	EndPoint = StartingPoint + LiftHeight;
+	StartingPoint = 0;
+	EndPoint = LiftHeight;
 	destination = StartingPoint;
+	Position = StartingPoint;
 }
 
 // Called every frame
 void ALiftBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (GetActorLocation().Z != destination ) {
+	if (Position != destination ) {
 		FVector newLocation = GetActorLocation();
+		Position += LiftHeight/move;
 		newLocation.Z += LiftHeight/move;
 		SetActorLocation(newLocation);
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::SanitizeFloat(EndPoint));
 
 	}
 	else {
@@ -62,16 +63,15 @@ void ALiftBase::ButtonTriggered(UPrimitiveComponent* OverlappedComponent, AActor
 	if (actor != nullptr && canMove) {
 		UpdateLift();
 		canMove = false;
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, "col");
 		//moving = true;
 	}
 }
 
 void ALiftBase::UpdateLift() {
 
-	if(GetActorLocation().Z != StartingPoint && GetActorLocation().Z != EndPoint)return;
+	if(Position != StartingPoint && Position != EndPoint)return;
 	
-	if (GetActorLocation().Z == StartingPoint) {
+	if (Position == StartingPoint) {
 		move = stepCount;
 		destination = EndPoint;
 	}

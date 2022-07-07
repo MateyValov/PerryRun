@@ -21,7 +21,8 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	float LiftHeight = 0.0f;
-
+	UPROPERTY(VisibleAnywhere)
+	float Position = 0.0f;
 
 private: 
 	UPROPERTY(EditAnywhere)

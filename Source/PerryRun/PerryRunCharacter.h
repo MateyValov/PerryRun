@@ -104,47 +104,22 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 	UFUNCTION()
-	void Clear() {
-		displayMessage = "";
-	}
+	void Clear() {displayMessage = "";}
 
 	UFUNCTION()
-		void changeMessage(FString message) {
-			displayMessage = message;
-			GetWorldTimerManager().SetTimer(messageHandle, this, &APerryRunCharacter::Clear, 1, false);
-		}
+	void changeMessage(FString message);
 
 	UFUNCTION()
-		void setSpawnpoint(FVector newLocation) { 
-				if (Spawnpoint != newLocation) {
-					//displayMessage = "Checkpoint Reached";
-					Spawnpoint = newLocation;
-				}			
-		}
+		void setSpawnpoint(FVector newLocation);
 
 	UFUNCTION(BlueprintCallable)
-		void Respawn() {
-			currHP = maxHP;
-			SetActorLocation(Spawnpoint);
-			SetActorRotation(FQuat(FRotator(0, 0, 0)), ETeleportType::None);
-	}
+	void Respawn();
 
 	UFUNCTION()
-		void print() {
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, "no longer invincible");
-		invincible = false;
-	}
+		void iframeCancel() {invincible = false;}
 
 	UFUNCTION()
-	void takeDamage(float damage, float recoveryTime) {
-		if (!invincible) {
-			currHP -= damage;
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, "vzemi toz demij");
-			if (currHP <= 0) die();
-			invincible = true;
-			GetWorldTimerManager().SetTimer(iframeHandle, this, &APerryRunCharacter::print, recoveryTime, false);
-		}
-	}
+		void takeDamage(float damage, float recoveryTime);
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void die();

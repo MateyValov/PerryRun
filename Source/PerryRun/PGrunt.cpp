@@ -20,20 +20,23 @@ void APGrunt::Tick(float DeltaTime)
 	float move =  FMath::Sin(Runtime);
 	Runtime += speed;//0.01;// DeltaTime;
 	
-	newLocation.Y = StartingPoint +  offset * move;
-	SetActorRotation(FQuat(FRotator(0, orientation, 0)), ETeleportType::None);
+	if(moveOnX)newLocation.X = StartingPoint.X +  offset * move;
+	else if(moveOnZ) newLocation.Z = StartingPoint.Z + offset * move;
+	else newLocation.Y = StartingPoint.Y + offset * move;
+	//SetActorRotation(FQuat(FRotator(0, orientation, 0)), ETeleportType::None);
 	SetActorLocation(newLocation);
-	if (newLocation.Y == StartingPoint || newLocation.Y == EndPoint) {
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, "col");
-		orientation += 180;
-	}
+	//if (newLocation.Y == StartingPoint || newLocation.Y == EndPoint) {
+	//	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, "col");
+	//	orientation += 180;
+	//}
 }
 
 void APGrunt::BeginPlay()
 {
 	Super::BeginPlay();
-	StartingPoint = GetActorLocation().Y - offset;
-	EndPoint = GetActorLocation().Y + offset;
+	
+	StartingPoint = GetActorLocation();
+	
 	if (random) {
 		offset = FMath::RandRange(100, 1000);
 		speed = FMath::FRandRange(0.01f, 0.07f);
