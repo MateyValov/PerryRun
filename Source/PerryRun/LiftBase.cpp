@@ -61,16 +61,22 @@ void ALiftBase::ButtonTriggered(UPrimitiveComponent* OverlappedComponent, AActor
 	APerryRunCharacter* actor = Cast<APerryRunCharacter>(OtherActor);
 	//bool moving = false;
 	if (actor != nullptr && canMove) {
-		UpdateLift();
+		UpdateLift(false, 10);
 		canMove = false;
 		//moving = true;
 	}
 }
 
-void ALiftBase::UpdateLift() {
+void ALiftBase::UpdateLift(bool isCalled, float releventPosition) {
 
-	if(Position != StartingPoint && Position != EndPoint)return;
-	
+	if(Position != StartingPoint && Position != EndPoint || LiftHeight*releventPosition ==Position)return;
+	if (isCalled) {
+		if(Position< releventPosition)move = stepCount;
+		else move = -stepCount;
+		destination = LiftHeight*releventPosition;
+		return;
+	}
+
 	if (Position == StartingPoint) {
 		move = stepCount;
 		destination = EndPoint;

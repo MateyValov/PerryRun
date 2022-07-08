@@ -76,6 +76,8 @@ void APerryRunCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &APerryRunCharacter::Interact);
+
 	PlayerInputComponent->BindAxis("MoveForward", this, &APerryRunCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &APerryRunCharacter::MoveRight);
 

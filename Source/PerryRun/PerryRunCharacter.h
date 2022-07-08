@@ -7,6 +7,9 @@
 #include "GameFramework/Character.h"
 #include "PerryRunCharacter.generated.h"
 
+//UDELEGATE()
+DECLARE_DELEGATE(InteractSignature);
+
 UCLASS(config=Game)
 class APerryRunCharacter : public ACharacter
 {
@@ -35,6 +38,9 @@ protected:
 
 public:
 	APerryRunCharacter();
+
+	//UDELEGATE()
+		InteractSignature InteractDelegate;
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, Category = Stats)
@@ -89,12 +95,15 @@ protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	// End of APawn interface
-
+	UFUNCTION()
+		void Interact() {
+		InteractDelegate.ExecuteIfBound();
+	}
 	/*UFUNCTION()
 		void beginCrouch();
 	UFUNCTION()
 		void endCrouch();*/
-
+	
 public:
 	virtual void Tick(float DeltaTime) override;
 
