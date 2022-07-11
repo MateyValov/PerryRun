@@ -8,11 +8,19 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Perception/AISense_Sight.h"
 
 //////////////////////////////////////////////////////////////////////////
 // APerryRunCharacter
 
 
+
+void APerryRunCharacter::setupStimulus(){
+	stimulus = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("stimulus"));
+	stimulus->RegisterForSense(TSubclassOf<UAISense_Sight>());
+	stimulus->RegisterWithPerceptionSystem();
+}
 
 APerryRunCharacter::APerryRunCharacter()
 {
@@ -49,7 +57,7 @@ APerryRunCharacter::APerryRunCharacter()
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
-
+	setupStimulus();
 }
 
 void APerryRunCharacter::BeginPlay()

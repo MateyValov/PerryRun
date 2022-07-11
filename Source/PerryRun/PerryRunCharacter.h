@@ -29,6 +29,11 @@ private:
 	FTimerHandle iframeHandle;
 	FTimerHandle messageHandle;
 
+	class UAIPerceptionStimuliSourceComponent* stimulus;
+
+	void setupStimulus();
+
+
 protected:
 	UPROPERTY()
 		bool isCrouching = false;
