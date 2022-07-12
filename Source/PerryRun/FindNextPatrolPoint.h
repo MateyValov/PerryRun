@@ -23,5 +23,14 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		float searchRadius = 1500.0f;
+		int minIndex = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int maxIndex = 0;
+	enum class EDirectionType {
+		Forward, Reverse
+	};
+	EDirectionType direction = EDirectionType::Forward;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	bool looped = false;
 };

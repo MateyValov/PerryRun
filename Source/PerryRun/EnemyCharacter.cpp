@@ -36,3 +36,21 @@ void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 }
 
+APatrolPath* AEnemyCharacter::getPath()
+{
+	return patrolPath;
+}
+
+int AEnemyCharacter::meleeAttack_Implementation()
+{
+	if (basicAttackMontage) {
+		PlayAnimMontage(basicAttackMontage);
+	}
+	return 0;
+}
+
+UAnimMontage* AEnemyCharacter::getbasicAttackMontage()
+{
+	return basicAttackMontage;
+}
+
